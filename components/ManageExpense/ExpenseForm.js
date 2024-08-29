@@ -29,17 +29,19 @@ export default function ExpenseForm({ onCancel, onSubmit, submitLabel, defaultVa
             description: inputValues.description
         }
 
+
+        const amountIsValid = !isNaN(expData.amount) && expData.amount > 0;
+        const dateIsValid = expData.date.toString() !== 'Invalid Date'
+        const descIsValid = expData.description.trim().length > 0;
+
+        if (!amountIsValid && !dateIsValid && !descIsValid) {
+            Alert.alert('Invalid input', 'Please check your input values')
+            return;
+        }
+
         onSubmit(expData);
     }
 
-    const amountIsValid = !isNaN(expData.amount) && expData.amount > 0;
-    const dateIsValid = expData.date.toString() !== 'Invalid Date'
-    const descIsValid = expData.description.trim().length > 0;
-
-    if (!amountIsValid && !dateIsValid && !descIsValid) {
-        Alert.alert('Invalid input', 'Please check your input values')
-        return;
-    }
 
     return <View style={styles.form}>
         <Text style={styles.title}>Your Expense</Text>
